@@ -1,0 +1,46 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import Layout from "../../layout/Layout.astro";
+export const getStaticPaths = (async () => {
+  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+  const { results } = await response.json();
+  return results.map((pokemon: any) => {
+    const id = pokemon.url.split("/").filter(Boolean).pop();
+    return {
+      params: { name: pokemon.name },
+      props: {
+        name: pokemon.name,
+        id,
+        image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+      },
+    };
+  });
+  return [];
+}) satisfies GetStaticPaths;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { name, id, image } = Astro.props;
+---
+
+<Layout title={`Detalle del pokemon: ${name}`}>
+  <div
+    class="text-center bg-slate-800 p-12 rounded-3xl shadow-2xl border-2 border-blue-500"
+  >
+    <img
+      src={image}
+      alt={name}
+      class="w-64 h-64 mx-auto drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]"
+    />
+    <h1 class="text-5xl font-black capitalize mt-4">{name}</h1>
+    <p class="text-slate-400 mt-2 font-mono">ID: #{id}</p>
+
+    <div class="mt-8">
+      <a
+        href="/pokemons"
+        class="bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
+      >
+        ← Volver a la Pokédex
+      </a>
+    </div>
+  </div>
+</Layout>

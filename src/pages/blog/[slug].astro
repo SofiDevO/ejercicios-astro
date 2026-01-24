@@ -1,0 +1,43 @@
+---
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
+import Layout from "../../layout/Layout.astro";
+
+export const getStaticPaths = (async () => {
+  //  Imagina que esto viene de una api
+  const posts = [
+    {
+      slug: "aprende-astro",
+      title: "Aprende astro con SofiDev",
+      content:  "Astro es un framework moderno para construir sitios web rápidos y optimizados. Con su arquitectura de islas, puedes crear aplicaciones web con múltiples frameworks o sin ellos, priorizando el rendimiento y la experiencia del usuario.\n\nEn este tutorial aprenderás desde los conceptos básicos hasta técnicas avanzadas. Descubrirás cómo aprovechar el Server-Side Rendering, la generación de sitios estáticos y mucho más para crear proyectos increíbles.",
+
+    },
+    {
+      slug: "aprende-css",
+      title: "Aprende css con SofiDev",
+      content: "CSS es el lenguaje que da vida y estilo a la web. Desde colores y tipografías hasta layouts complejos con Grid y Flexbox, CSS te permite transformar HTML simple en experiencias visuales impactantes.\n\nAprenderás a dominar selectores, propiedades, animaciones y técnicas modernas como CSS Variables y Container Queries. Descubre cómo crear diseños responsivos y accesibles que funcionen perfectamente en cualquier dispositivo.",
+    },
+    {
+      slug: "aprende-javascript",
+      title: "Aprende javascript con SofiDev",
+      content: "JavaScript es el lenguaje de programación que hace que la web sea interactiva y dinámica. Desde validar formularios hasta crear aplicaciones web completas, JavaScript es esencial para cualquier desarrollador web moderno.\n\nEn este curso explorarás desde los fundamentos como variables, funciones y objetos, hasta conceptos avanzados como promesas, async/await y programación funcional. Aprenderás a manipular el DOM, trabajar con APIs y crear experiencias de usuario fluidas e interactivas.",
+
+    },
+  ];
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { post } = Astro.props;
+---
+
+<Layout title={post.title}>
+  <section class="w-full max-w-1/2 mx-auto px-4 py-5 flex flex-col items-center justify-center ">
+    <article class="max-w-2xl mx-auto p-4 shadow-2xl ">
+      <h1 class="text-2xl font-semibold">{post.title}</h1>
+      <p>{post.content}</p>
+    </article>
+  </section>
+</Layout>
