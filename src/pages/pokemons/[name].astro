@@ -20,6 +20,7 @@ export const getStaticPaths = (async () => {
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { name, id, image } = Astro.props;
+
 ---
 
 <Layout title={`Detalle del pokemon: ${name}`}>
@@ -35,12 +36,12 @@ const { name, id, image } = Astro.props;
     <p class="text-slate-400 mt-2 font-mono">ID: #{id}</p>
 
     <div class="mt-8">
-      <a
-        href="/pokemons"
+      <button
+        onclick="history.back()"
         class="bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700 transition-colors"
       >
         ← Volver a la Pokédex
-      </a>
+      </button>
     </div>
   </div>
 </Layout>
