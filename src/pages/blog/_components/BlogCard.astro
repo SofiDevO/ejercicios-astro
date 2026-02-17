@@ -1,0 +1,43 @@
+---
+const { post } = Astro.props;
+const { title, pubDate, description, category, image, tags } = post.data;
+---
+
+<article class="flex flex-col overflow-hidden  rounded-xl border-slate-200 w-full  shadow-2xl">
+  <div class="aspect-vide w-full h-40 overflow-hidden bg-slate-100">
+    {
+      image ? (
+        <img
+          src={image}
+          alt={`portada del post de ${title}`}
+          class="h-full object-cover w-full"
+        />
+      ) : (
+        <div class="flex h-full items-center justify-center text-slate-400">
+          <span>Portada no disponible</span>
+        </div>
+      )
+    }
+  </div>
+
+  <h3 class="text-xl font-bold text-violet-600 line-clamp-2 mb-2">
+    <a href={`/blog/${post.id}`}>
+      {title}
+    </a>
+  </h3>
+
+  <p class="mb-4 txt-sm text-salate-600 line-clamp-2 text-slate-400">
+    {description}
+  </p>
+  <div class="mt-auto flex fle-wrap gap-2 p-2">
+    {
+      tags
+        .slice(0, 3)
+        .map((tag: string) => (
+          <span class="text-xs bg-violet-900 text-white  rounded-4xl p-1">
+            {tag}
+          </span>
+        ))
+    }
+  </div>
+</article>
