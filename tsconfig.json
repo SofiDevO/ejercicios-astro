@@ -1,5 +1,17 @@
 {
   "extends": "astro/tsconfigs/base",
   "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "exclude": ["dist"],
+  "compilerOptions": {
+     "paths": {
+      // A new catch-all that replaces the baseUrl:
+      "*": ["./src/*"],
+
+      // Every other path now has an explicit common prefix:
+      "@pages/*": ["./src/pages/*"],
+      "@layout/*": ["./src/layout/*"],
+      "@components/*": ["./src/components/*"],
+      "@i18n/*": ["./src/i18n/*"],
+    }
+  }
 }
